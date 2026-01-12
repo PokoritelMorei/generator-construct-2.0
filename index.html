@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSTRUCT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', HelveticaNeue, HelveticaNeue;
+        }
+        
+        body {
+            background: #293133;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background-image: url(https://altairproject.ru/local/templates/tpl/images/logo.png);
+            background-size: 20% 70%;
+            background-repeat: no-repeat;
+            background-position: left 10px top 12px;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+            width: 100%; 
+            height: 80px;
+            color: #0092cb;
+            padding: 12px;
+            text-align: right;
+        }
+        
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 1px;
+    /* Рамка вокруг заголовка */
+    border: 1px solid #9cd8ef;  /* Цвет рамки */
+    border-radius: 60px;        /* Закругленные углы */
+    padding: 10px 20px;         /* Отступы внутри рамки */
+    display: inline-block;      /* Чтобы рамка обернула текст */
+    background: rgba(255, 225, 255, 0); /* Полупрозрачный фон */
+    box-shadow:  4px 4px rgba(7, 157, 216, 0.3); /* Тень для объема */
+}
+        }
+        
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 18px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .input-row > div {
+            flex: 1;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #96cb59;
+        }
+        
+        .info-box {
+            display: inline-block;
+            padding: 5px 5px;
+            background: white;
+            color: #293133;
+            border-radius: 2px;
+            font-weight: medium;
+            margin-left: -5px;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .info-box.success {
+            background: white;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 19px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: #079dd8;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #96cb59;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #ff0a0b;
+            color: white;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-box h3 {
+            color: #293133;
+            margin-bottom: 8px;
+        }
+        
+        #result {
+            font-family: 'HelveticaNeue', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            word-break: break-all;
+            min-height: 50px;
+        }
+        
+        .data-table {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #293133;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .input-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CONSTRUCT</h1>
+            <div class="subtitle"></div>
+        </div>
+        
+        <div class="content">
+            <div class="input-group">
+                <div class="input-row">
+                    <div>
+                        <label>1. Проект</label>
+                        <select id="projectSelect">
+                            <option value="">Выберите проект...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Шифр</label>
+                        <div>
+                            <span id="shifrDisplay" class="info-box">Не выбран</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div>
+                        <label>2. Раздел</label>
+                        <select id="sectionSelect">
+                            <option value="">Выберите раздел...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>3. Номер раздела</label>
+                        <input type="text" id="sectionNumber" placeholder="Например: 1, 2.1, A">
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div>
+                        <label>4. Позиция сооружения</label>
+                        <input type="text" id="position" placeholder="Например: С-1, П-2">
+                    </div>
+                    <div>
+                        <label>5. Тип</label>
+                        <select id="typeSelect">
+                            <option value="">Выберите тип...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Расшифровка</label>
+                        <div>
+                            <span id="decodingDisplay" class="info-box success">Не выбрана</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label>6. Примечание</label>
+                    <input type="text" id="note" placeholder="Дополнительная информация">
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="generateCode()">Сгенерировать</button>
+                <button class="btn btn-success" onclick="copyToClipboard()">Копировать</button>
+                <button class="btn btn-danger" onclick="clearAll()">Очистить всё</button>
+            </div>
+            
+            <div class="result-box">
+                <h3>Итоговый шифр:</h3>
+                <div id="result">Здесь появится сгенерированный шифр...</div>
+            </div>
+            
+            <div class="data-table" hidden>
+                <h3 style="margin-bottom: 5px; text-align: center; color: #2c3e50;">База данных проектов:</h3>
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Проект</th>
+                            <th>ШИФР</th>
+                            <th>Раздел</th>
+                            <th>Тип</th>
+                            <th>Расшифровка</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Данные будут загружены через JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>Генератор кодов проекта v1.0</div>
+            <div>Для использования просто откройте этот файл в браузере</div>
+        </div>
+    </div>
+
+    <script>
+        // Данные из Excel
+        const data = [
+            {project: "Дубна. 1 этап", shifr: "347-20С-01-1С", type: "Графическая часть. КМ", decoding: "ГЧ-КМ"},
+            {project: "Дубна. 2 этап", shifr: "347-20С-01-2С",  type: "Графическая часть. КЖ", decoding: "ГЧ-КЖ"},
+            {project: "Шелехов-2П-Водовод", shifr: "К-24-01491", section: "КР"},
+            {project: "Киров-КОС", shifr: "228-23", section: "АС"},
+            {project: "Иркутск-Мира-Коллектор", shifr: "АТ-ИРК-25-011", section: "АР", type: "Графическая часть", decoding: "ГЧ"},
+            {project: "Иркутск-ПБ-Иловые карты", shifr: "​ЭС-ИРК-25-004", section: "ПЗУ", type: "Текстовая часть. Содержание", decoding: "ТЧ-С"},
+            {project: "Иркутск-Хомутово-Коллектор-2", shifr: "ОК-52-22", section: "ИОС", type: "Текстовая часть. Титульный лист", decoding: "ТЧ-Т"},
+            {project: "Иркутск-Хомутово-Водовод-2", shifr: "ОК-51-22", section: "ТХ", type: "Текстовая часть. Пояснительная записка", decoding: "ТЧ-ПЗ"},
+            {project: "Москва-Филька-Западный-ОС", shifr: "УД-МСК-25-006", section: "ПОС", type: "Текстовая часть. Лист регистрации изменений", decoding: "ТЧ-ЛРИ"},
+            {project: "Москва-Щукино-ДНС ДК", shifr: "МИ-2024-048", section: "ООС", type: "Текстовая часть. Таблица регистрации изменений", decoding: "ТЧ-РИ"},
+            {project: "Павловский Посад-КОС", shifr: "ЭС-ППО-25-013", section: "ПБ"},
+            {project: "Раменское-Клишева-ОС", shifr: "ЭС-РМК-25-013", section: "ОДИ", type: "Ведомости объемов работ (ВОР)", decoding: "ВОР"},
+            {project: "Сургут-Федоровский-КОС", shifr: "ЭС-СУР-25-005", section: "ЭЭ", type: "Расчетно-пояснительная записка", decoding: "РЧ-РПЗ"},
+            {project: "Сургут-Черная речка-Коллектор", shifr: "АТ-СУР-25-010", section: "ТКР", type: "Расчетная модель", decoding: "РЧ-РМ"},
+            {project: "", shifr: "", section: "", type: "Расчетно-пояснительная записка. Титульный лист", decoding: "РЧ-Т"},
+            {project: "Вологда-Шексна-КОС", shifr: "21-1-17", type: "Текстовая часть. Обложка", decoding: "ТЧ-О"},
+            {project: "Иваново-Авдотьино-ОНВС-2", shifr: "4-18", type: "Расчетная схема", decoding: "РЧ-РС"},
+            {project: "Иркутск-Ангара-БУ-2", shifr: "АТ-ИРК-25-009", type: "Пуско-наладочные работы", decoding: "ПНР"},
+            {project: "Иркутск-Байкальский тракт-Водовод", shifr: "ЭС-ИРК-24-003",  section: "ППО", type: "Спецификация", decoding: "СО"},
+            {project: "Иркутск-КОС-ЛБ", shifr: "ЭС-ИРК-22",  section: "ИЛО", type: "Приложение", decoding: "П"},
+            {project: "Иркутск-Нижний бьеф-КНС", shifr: "К-23-01671-1", section: "ПОД"},
+            {project: "Киров-КОС", shifr: "228-23", section: "ПОС"},
+            {project: "Шелехов-НС2П-Водовод", shifr: "ЭС-ШЕЛ-25-017", section: "СМ"},
+            {project: "Нижний Новгород-Малиновая гряда-ВС", shifr: "23-24-83-520102-2-1",   section: "ТБЭ"},
+            {project: "Иркутск-Байкальский тракт-Коллектор", shifr: "ЭС-ИРК-24-016"},
+        ];
+
+        // Словари для быстрого поиска
+        const projectToShifr = {};
+        const typeToDecoding = {};
+        
+        // Заполняем выпадающие списки и словари
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectSelect = document.getElementById('projectSelect');
+            const sectionSelect = document.getElementById('sectionSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const tableBody = document.getElementById('tableBody');
+            
+            // Собираем уникальные значения
+            const projects = new Set();
+            const sections = new Set();
+            const types = new Set();
+            
+            data.forEach(item => {
+                if (item.project) {
+                    projects.add(item.project);
+                    projectToShifr[item.project] = item.shifr;
+                }
+                if (item.section) {
+                    sections.add(item.section);
+                }
+                if (item.type) {
+                    types.add(item.type);
+                    typeToDecoding[item.type] = item.decoding;
+                }
+                
+                // Добавляем строку в таблицу
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.project || ''}</td>
+                    <td>${item.shifr || ''}</td>
+                    <td>${item.section || ''}</td>
+                    <td>${item.type || ''}</td>
+                    <td>${item.decoding || ''}</td>
+                `;
+            });
+            
+            // Заполняем выпадающие списки
+            [...projects].sort().forEach(project => {
+                const option = document.createElement('option');
+                option.value = project;
+                option.textContent = project;
+                projectSelect.appendChild(option);
+            });
+            
+            [...sections].sort().forEach(section => {
+                const option = document.createElement('option');
+                option.value = section;
+                option.textContent = section;
+                sectionSelect.appendChild(option);
+            });
+            
+            [...types].sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                typeSelect.appendChild(option);
+            });
+            
+            // Обработчики изменений
+            projectSelect.addEventListener('change', function() {
+                const shifr = projectToShifr[this.value] || 'не выбран';
+                document.getElementById('shifrDisplay').textContent = shifr;
+            });
+            
+            typeSelect.addEventListener('change', function() {
+                const decoding = typeToDecoding[this.value] || 'не выбрана';
+                document.getElementById('decodingDisplay').textContent = decoding;
+            });
+        });
+
+        function generateCode() {
+            // Собираем все части
+            const parts = [];
+            
+            // 1. Шифр
+            const project = document.getElementById('projectSelect').value;
+            let shifr = projectToShifr[project] || "";
+            parts.push(shifr);
+            
+            // 2. Раздел и Номер раздела
+            const section = document.getElementById('sectionSelect').value;
+            const sectionNum = document.getElementById('sectionNumber').value.trim();
+            
+            let sectionPart = "";
+            if (section && sectionNum) {
+                sectionPart = section + sectionNum;
+            } else if (section) {
+                sectionPart = section;
+            } else if (sectionNum) {
+                sectionPart = sectionNum;
+            }
+            parts.push(sectionPart);
+            
+            // 3. Позиция сооружения
+            const position = document.getElementById('position').value.trim();
+            parts.push(position);
+            
+            // 4. Расшифровка
+            const type = document.getElementById('typeSelect').value;
+            const decoding = typeToDecoding[type] || "";
+            parts.push(decoding);
+            
+            // 5. Примечание
+            const note = document.getElementById('note').value.trim();
+            if (note) {
+                parts.push(note);
+            }
+            
+            // Формируем строку, убирая пустые части
+            const resultParts = [];
+            resultParts.push(parts[0]); // ШИФР
+            
+            if (parts[1]) { // РазделНомер
+                resultParts.push(parts[1]);
+            }
+            
+            if (parts[2]) { // Позиция
+                resultParts.push(parts[2]);
+            }
+            
+            resultParts.push(parts[3]); // Расшифровка
+            
+            if (parts[4]) { // Примечание
+                resultParts.push(parts[4]);
+            }
+            
+            let result = resultParts.join("-");
+            
+            // Чистка от лишних дефисов
+            while (result.includes("--")) {
+                result = result.replace("--", "-");
+            }
+            
+            if (result.startsWith("-")) {
+                result = result.substring(1);
+            }
+            
+            if (result.endsWith("-")) {
+                result = result.slice(0, -1);
+            }
+            
+            // Отображаем результат
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = result || "Заполните необходимые поля...";
+            
+            // Подсветка
+            resultElement.style.backgroundColor = "#e8f4f8";
+            setTimeout(() => {
+                resultElement.style.backgroundColor = "";
+            }, 300);
+            
+            // Статус
+            const now = new Date();
+            const time = now.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+            showMessage(`Шифр сгенерирован: ${time}`);
+        }
+
+        function copyToClipboard() {
+            const result = document.getElementById('result').textContent;
+            
+            if (!result || result === "Здесь появится сгенерированный шифр..." || result === "Заполните необходимые поля...") {
+                alert("Нет шифра для копирования!");
+                return;
+            }
+            
+            navigator.clipboard.writeText(result).then(() => {
+                showMessage("Шифр скопирован в буфер обмена!");
+                
+                // Визуальный фидбэк
+                const btn = document.querySelector('.btn-success');
+                const originalText = btn.textContent;
+                btn.textContent = "✅ Скопировано!";
+                btn.style.backgroundColor = "#2ecc71";
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.backgroundColor = "";
+                }, 1000);
+            }).catch(err => {
+                console.error('Ошибка копирования:', err);
+                alert("Не удалось скопировать код. Скопируйте его вручную.");
+            });
+        }
+
+        function clearAll() {
+            document.getElementById('sectionNumber').value = "";
+            document.getElementById('position').value = "";
+            document.getElementById('typeSelect').value = "";
+            document.getElementById('decodingDisplay').textContent = "не выбрана";
+            document.getElementById('note').value = "";
+            document.getElementById('result').textContent = "Здесь появится сгенерированный шифр...";
+            
+            showMessage("Все поля очищены");
+        }
+
+        function showMessage(message) {
+            // Можно добавить всплывающее уведомление
+            console.log(message);
+            // Для простоты показываем в alert
+            // alert(message);
+        }
+    </script>
+</body>
+</html>
