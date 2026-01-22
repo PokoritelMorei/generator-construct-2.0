@@ -1138,7 +1138,7 @@
             {department: "Отдел технологических решений", sections: [
                 {code: "ТХ", name: "Технология производства"},
                 {code: "ТК", name: "Технологические коммуникации"},
-                {code: "ТКР", name: "Технологические и Конструктивные Решения"},
+                {code: "ТКР", name: "Технологические и Конструктивные решения"},
                 {code: "ИОС", name: "Инженерное оборудование, сети и системы инженерно-технического обеспечения"}
             ]},
             {department: "Отдел конструктивных решений", sections: [
@@ -1643,7 +1643,6 @@
         }
 
         function clearAll() {
-            document.getElementById('sectionSelect').value = "";
             document.getElementById('sectionNumber').value = "";
             document.getElementById('position').value = "";
             document.getElementById('typeSelect').value = "";
@@ -1663,10 +1662,7 @@
             dragDropHint.textContent = "Перетащите файл сюда";
             
             isCodeGenerated = false;
-            
-            // Обновляем список разделов
-            updateSectionsByDepartment("");
-            
+
             // Обновляем инструкцию
             updateInstructionImage("");
             
